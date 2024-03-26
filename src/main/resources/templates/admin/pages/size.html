@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin size</title>
+</head>
+
+<body ng-controller="size-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> Product Size</h4>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-size" data-bs-toggle="pill" href="#home"><i
+                                class="bx bx-user me-1"></i>
+                            Edit size</a>
+                    </li>
+                    <li class="nav-item">
+                        <a ng-click="init()" class="nav-link" data-bs-toggle="pill" href="#menu1"><i class='bx bx-list-ol me-1'></i>
+                            Size list</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="card mb-4">
+                            <h5 class="card-header">Size Details</h5>
+                            <!-- Size -->
+                            <div class="card-body">
+                                <form name="frmSz">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                   <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                       <i class='bx bx-text'></i></span>
+                                                    <input  class="form-control"  ng-model="form.sizeValue" name="sizeValue" minlength="2" maxlength="50"
+                                                            type="text"
+                                                            id="basic-icon-default-fullname"
+                                                            placeholder="Enter sizeValue..."
+                                                            aria-label="Blue"
+                                                            aria-describedby="basic-icon-default-fullname2"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="display: flex">
+                                            <label class="form-label">available</label>
+                                            <div class="form-check mt-3 ml-pr-2">
+                                                <input class="form-check-input" type="radio" ng-model="form.available"
+                                                    name="available" ng-value="true" id="inlineFormCheck1" checked />
+                                                <label class="form-check-label" for="inlineFormCheck1"> Yes </label>
+                                            </div>
+                                            <div class="form-check mt-3">
+                                                <input class="form-check-input" type="radio" ng-model="form.available"
+                                                    name="available" ng-value="false" id="inlineFormCheck2" />
+                                                <label class="form-check-label" for="inlineFormCheck2"> No </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-2">
+                                        <button ng-click="create()" class="btn btn-outline-primary me-2"><i class='bx bxs-add-to-queue'></i>Create</button>
+                                        <button ng-click="update()" class="btn btn-outline-warning me-2"><i class='bx bx-save'></i>Update</button>
+                                        <button ng-click="delete()" class="btn btn-outline-danger me-2"><i class='bx bxs-message-square-x'></i>Delete</button>
+                                        <button ng-click="reset()" class="btn btn-outline-secondary"><i class='bx bx-refresh'></i>Reset</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /Account -->
+                        </div>
+                    </div>
+                    <div id="menu1" class="container tab-pane fade"><br>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="searchtxt" type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                                           aria-label="Search..." />
+                                </div>
+                            </div>
+                            <h5 class="card-header">Size list</h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click='sortColumn("id")' ng-class='sortClass("id")'>Id</th>
+                                            <th ng-click='sortColumn("sizeValue")' ng-class='sortClass("sizeValue")'>Name</th>
+                                            <th  ng-click='sortColumn("available")' ng-class='sortClass("available")'>Available</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr ng-repeat="size in pager.sizes | filter: searchtxt |orderBy:column:reverse">
+                                            <td>{{size.id}}</td>
+                                            <td>{{size.sizeValue}}</td>
+                                            <td>{{size.available?'Yes':'No'}}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                        data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" ng-show="showButtons.includes(0)" ng-click="edit(size)"><i
+                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="demo-inline-spacing">
+                            <!-- Basic Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item first" ng-click="pager.first()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pager.previous()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pager.page+1}} of {{pager.count}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pager.next()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pager.last()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--/ Basic Pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        var modal1 = document.getElementById('id02');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

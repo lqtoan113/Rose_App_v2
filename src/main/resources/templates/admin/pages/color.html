@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminations Color/Size</title>
+    <style>
+        .original {
+            background-color: red;
+            width: 30px;
+            height: 20px;
+            border-radius: 5%;
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body ng-controller="color-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">Settings Color/Size</h4>
+        <div class="row d-f justify-content-around">
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-start">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start">
+                            <div class="avatar flex-shrink-0 mr-cs">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <i class='bx bx-medal'></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">Black</span>
+                                <h3 class="card-title mb-2">120</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex align-items-start">
+                                <div class="avatar flex-shrink-0 mr-cs">
+                                    <span class="avatar-initial rounded bg-label-warning">
+                                        <i class='bx bxs-medal' ></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="fw-semibold d-block mb-1">XL</span>
+                                    <h3 class="card-title mb-2">100</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row body-color">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-color" data-bs-toggle="pill" href="#home">
+                            <i class='bx bxs-palette me-1' ></i>
+                            Color list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a ng-click="init()" class="nav-link" data-bs-toggle="pill" href="#menu1"><i
+                                class='bx bx-list-ol me-1'></i>
+                            Size list</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="card-body">
+                            <form id="formAccountSettings" method="POST" onsubmit="return false" name="frmclor">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="col-sm-2 col-form-label"
+                                            for="basic-icon-default-fullname">Name</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="basic-icon-default-colorname1" class="input-group-text">
+                                                    <i class='bx bx-text'></i></span>
+                                                <input class="form-control" ng-model="form.colorName" name="colorname"
+                                                    minlength="2" maxlength="50" type="text"
+                                                    id="basic-icon-default-colorname2" placeholder="Enter color name..."
+                                                    aria-label="Blue" aria-describedby="basic-icon-default-fullname2" />
+                                            </div>
+                                        </div>
+                                        <span style="color: red" class="failure" ng-show="frmclor.colorname.$invalid">
+                                            Name color must be 2 or more characters and not exceed 50 characters
+                                        </span>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="col-sm-3 col-form-label" for="basic-icon-default-fullname">Create
+                                            Date</label>
+                                        <div class="col-sm-5">
+                                            <div class="input-group input-group-merge">
+                                                <span id="createDate" class="input-group-text">
+                                                    <i class='bx bx-calendar'></i></span>
+                                                <input ng-model="form.createDate" name="createDate" type="date"
+                                                    class="form-control" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="col-sm-2 col-form-label"
+                                            for="basic-icon-default-fullname">Color</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="colorValue" class="input-group-text">
+                                                    <i class='bx bxs-palette'></i></span>
+                                                <input style="height: 32px;" type="color" ng-model="form.colorValue"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label>Available</label>
+                                        <div style="width: 42%;" >
+                                            <div class="form-check ps-0">
+                                                <div class="form-check form-switch">
+                                                    <input ng-model="form.available" class="form-check-input"
+                                                        type="checkbox" id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 actionColor">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-click="createColor()">
+                                                        <i class='bx bxs-add-to-queue'></i>Create</a>
+                                                    <a class="dropdown-item" ng-click="updateColor()"><i
+                                                            class="bx bx-edit-alt me-1"></i> Update</a>
+                                                    <a class="dropdown-item" ng-click="reset()">
+                                                        <i class='bx bx-refresh'></i>Reset</a>
+                                                </div>
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="searchtxt" type="text" class="form-control border-0 shadow-none"
+                                        placeholder="Search..." aria-label="Search..." />
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click='sortColumn("id")' ng-class='sortClass("id")'>Id</th>
+                                            <th ng-click='sortColumn("colorName")' ng-class='sortClass("colorName")'>
+                                                Name</th>
+                                            <th ng-click='sortColumn("colorValue")' ng-class='sortClass("colorValue")'>
+                                                Color Code</th>
+                                            <th ng-click='sortColumn("createDate")' ng-class='sortClass("createDate")'>
+                                                Create Date</th>
+                                            <th  class="text-center" ng-click='sortColumn("available")' ng-class='sortClass("available")'>
+                                                Available</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr
+                                            ng-repeat="color in pagerColor.colors | filter: searchtxt |orderBy:column:reverse">
+                                            <td>{{color.id}}</td>
+                                            <td id="color">{{color.colorName}}</td>
+                                            <td>
+                                                <div class="original" ng-style="style(color.colorValue)">
+                                                    {{color.colorValue}}
+                                                </div>
+                                            </td>
+                                            <td>{{color.createDate|date:'dd-MM-yyyy'}}</td>
+                                            <td  class="text-center">
+                                                <div class="form-switch">
+                                                    <input ng-model="color.available" class="form-check-input"
+                                                        type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="dropdown-item" ng-click="editColor(color)"><i
+                                                        class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="demo-inline-spacing">
+                            <!-- Basic Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item first" ng-click="pagerColor.first()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pagerColor.previous()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pagerColor.page+1}} of {{pagerColor.count}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pagerColor.next()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pagerColor.last()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--/ Basic Pagination -->
+                        </div>
+                    </div>
+                    <div id="menu1" class="container tab-pane fade"><br>
+                        <div class="card-body">
+                            <form name="frmSz">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="col-sm-2 col-form-label"
+                                            for="basic-icon-default-fullname">Name:</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                    <i class='bx bx-text'></i></span>
+                                                <input class="form-control" ng-model="form.sizeValue" name="sizeValue"
+                                                    minlength="1" maxlength="50" type="text"
+                                                    id="basic-icon-default-fullname" placeholder="Enter sizeValue..."
+                                                    aria-label="Blue" aria-describedby="basic-icon-default-fullname2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6 " style="display: flex">
+                                        <label class="form-label">Available</label>
+                                        <div style="width: 41%;margin-left: -85px;"
+                                            class="form-check mt-3">
+                                            <div class="form-check form-switch">
+                                                <input ng-model="form.available" class="form-check-input"
+                                                    type="checkbox" id="flexSwitchCheckDefault1">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 actionColor">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" ng-click="createSize()">
+                                                        <i class='bx bxs-add-to-queue'></i>Create</a>
+                                                    <a class="dropdown-item" ng-click="updateSize()"><i
+                                                            class="bx bx-edit-alt me-1"></i> Update</a>
+                                                    <a class="dropdown-item" ng-click="resetSize()">
+                                                        <i class='bx bx-refresh'></i>Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="searchtxt" type="text" class="form-control border-0 shadow-none"
+                                        placeholder="Search..." aria-label="Search..." />
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click='sortColumn("id")' ng-class='sortClass("id")'>Id</th>
+                                            <th class="text-center" ng-click='sortColumn("sizeValue")' ng-class='sortClass("sizeValue")'>
+                                                Name</th>
+                                            <th class="text-center" ng-click='sortColumn("available")' ng-class='sortClass("available")'>
+                                                Available</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr ng-repeat="size in pagerSize.sizes | filter: searchtxt |orderBy:column:reverse">
+                                            <td>{{size.id}}</td>
+                                            <td class="text-center">{{size.sizeValue}}</td>
+                                            <td class="text-center">
+                                                <div class="form-switch">
+                                                    <input ng-model="size.available" class="form-check-input"
+                                                        type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="dropdown-item" ng-click="editSize(size)"><i
+                                                        class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="demo-inline-spacing">
+                            <!-- Basic Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item first" ng-click="pagerSize.first()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pagerSize.previous()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pagerSize.page+1}} of {{pagerSize.count}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pagerSize.next()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pagerSize.last()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--/ Basic Pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        var modal1 = document.getElementById('id02');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

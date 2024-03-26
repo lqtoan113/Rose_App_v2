@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSE</title>
+</head>
+
+<body>
+    <div class="order-status order-success">
+        <div class="top-part">
+            <div ng-if="paymentStatus">
+                <div class="paid">
+                    <i class="zmdi zmdi-check-circle icon-payment"></i>
+                    <h3>
+                        <span class="payment-success">
+                            Payment success
+                        </span>
+                    </h3>
+                </div>
+            </div>
+            <div ng-if="!paymentStatus">
+                <div class="unpaid">
+                    <i class="zmdi zmdi-money-off icon-payment"></i>
+                    <h3>
+                        <span class="payment-failed">
+                            Payment fail
+                        </span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="group-success">
+            <a href="/shop"><button type="button" class="btn btn-primary">Continue shopping</button></a>
+        </div>
+    </div>
+</body>
+
+</html>

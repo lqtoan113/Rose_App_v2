@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSE</title>
+</head>
+
+<body>
+    <!-- Title page -->
+    <section class="bg-img1 txt-center p-lr-15 p-tb-92"
+        style="background-image: url('user/assets/images/recharge-bg.jpg');">
+        <h2 class="ltext-105 cl0 txt-center">
+            Recharge
+        </h2>
+    </section>
+
+
+    <!-- Content page -->
+    <section class="bg0 p-t-30 p-b-116">
+        <div class="container">
+            <div class="flex-w flex-tr flex-c">
+                <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                    <div class="d-f flex-c">
+                        <div onclick="setAmount(this)" class="suggest-amount">50</div>
+                        <div onclick="setAmount(this)" class="suggest-amount">100</div>
+                        <div onclick="setAmount(this)" class="suggest-amount">200</div>
+                        <div onclick="setAmount(this)" class="suggest-amount">400</div>
+                        <div onclick="setAmount(this)" class="suggest-amount">800</div>
+                    </div>
+                    <form>
+                        <div class="bor8 m-b-20 how-pos4-parent">
+                            <input id="rechargeAmount" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="number"
+                                placeholder="$0">
+                            <div class="how-pos4 pointer-none">
+                                <i style="font-size: 25px;" class="zmdi zmdi-money-box"></i>
+                            </div>
+                        </div>
+
+                        <button ng-click="recharge()"
+                            class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                            Recharge
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

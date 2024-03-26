@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Discount</title>
+</head>
+
+<body ng-controller="discount-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Discount Settings /</span> Discount</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-discount" data-bs-toggle="pill" href="#home">
+                            <i class='bx bx-layer me-1'></i>
+                            Edit Discount
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#menu1">
+                            <i class='bx bx-list-ol me-1'></i>
+                            Discount list
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="card mb-4">
+                            <!-- Color -->
+                            <hr class="my-0" />
+                            <div class="card-body">
+                                <form id="formAccountSettings" method="POST" onsubmit="return false" name="frmclor">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Discount Code</label>
+                                            <input id="discountCode" ng-model="form.discountCode" name="discountCode"
+                                                type="text" class="form-control" maxlength="20"
+                                                placeholder="Please enter code.." ng-pattern="/^[a-zA-Z0-9 ._-]+$/"
+                                                required />
+                                            <span style="color: red" class="failure"
+                                                ng-show="frmclor.discountCode.$error.pattern">
+                                                You cannot enter special characters!!!
+                                            </span>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Description</label>
+                                            <input ng-model="form.description" name="description" class="form-control"
+                                                type="text" minlength="2" maxlength="50" placeholder="Please enter description.."
+                                                required />
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Day start</label>
+                                            <input class="form-control" type="datetime-local" id="day-start" required />
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="form-label">Day end</label>
+                                            <input class="form-control" type="datetime-local" id="day-end" required />
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-3 col-form-label text-blk"
+                                                for="basic-icon-default-productName">Percent</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-commonPrice" class="input-group-text">
+                                                        <i class='bx bx-purchase-tag'></i></span>
+                                                    <input class="form-control" type="numer"
+                                                        ng-model="form.discountPercent" name="discountPercent"
+                                                        minlength="0" placeholder="Enter percent of discount..."
+                                                        ng-pattern="/^[0-9]+(\.[0-9]{1,5})?$/" required />
+                                                </div>
+                                                <span style="color: red"
+                                                    ng-show="frmpro.discountPercent.$error.pattern">
+                                                    Your product price cannot be negative !
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label>Available</label>
+                                            <div class="form-check form-switch">
+                                                <input ng-model="form.active" class="form-check-input" type="checkbox"
+                                                       id="flexSwitchCheckDefault">
+                                            </div>
+
+
+<!--                                            <label class="form-label">Available</label>-->
+<!--                                            <div class="form-control">-->
+<!--                                                <div class="form-check ps-0">-->
+<!--                                                    <input class="form-check-input1" name="status"-->
+<!--                                                        ng-model="form.active" value="true" type="radio"-->
+<!--                                                        id="activeTrue">-->
+<!--                                                    <label class="form-check-label" for="activeTrue">-->
+<!--                                                        Yes-->
+<!--                                                    </label>-->
+
+<!--                                                    <input class="form-check-input2 ms-2" name="status"-->
+<!--                                                        ng-model="form.active" value="false" type="radio"-->
+<!--                                                        id="activeFalse">-->
+<!--                                                    <label class="form-check-label" for="activeFalse">-->
+<!--                                                        No-->
+<!--                                                    </label>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+                                        </div>
+
+                                        <div id="addProduct" class="mb-3 col-md-6 d-none">
+                                            <label class="form-label">Product code</label>
+                                            <div class="content d-f">
+                                                <ul id="tags-ul">
+                                                    <input id="tags" type="text" spellcheck="false">
+                                                </ul>
+                                                <button type="button" class="btn btn-primary btn-addProduct"
+                                                    data-bs-toggle="modal" data-bs-target="#backDropModal">
+                                                    <i class='bx bx-plus-circle'></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <button ng-click="createDiscount()"
+                                            class="btn btn-outline-primary me-2">Create</button>
+                                        <button ng-click="updateDiscount()"
+                                            class="btn btn-outline-warning me-2">Update</button>
+                                        <button ng-click="reset()" class="btn btn-outline-secondary">Reset</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /Account -->
+                        </div>
+                        <div ng-if="editProductCate" class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="searchtxt" type="text" class="form-control border-0 shadow-none"
+                                        placeholder="Search..." aria-label="Search..." />
+                                </div>
+                            </div>
+                            <h5 class="card-header">Product list</h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th class="text-center">Product Name</th>
+                                            <th class="text-center">Total Child</th>
+                                            <th class="text-center">Price</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr ng-repeat="p in pagerDiscountProduct.discountProduct | filter: searchtxt">
+                                            <td><img width="50px" src="{{p.imageUrl}}" alt=""></td>
+                                            <td class="text-center">{{p.productName}}</td>
+                                            <td class="text-center">{{p.productEntries.length}}</td>
+                                            <td class="text-center">{{p.commonPrice}}</td>
+                                            <td><span class="badge me-1 {{p.available}}">{{p.available}}</span></td>
+                                            <td>
+                                                <a class="dropdown-item" ng-click="deleteProduct(p.productCode)">
+                                                    <i class='bx bx-trash me-1'></i>
+                                                    Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="demo-inline-spacing">
+                                    <!-- Basic Pagination -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <li class="page-item first" ng-click="pagerDiscountProduct.first()">
+                                                <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                            </li>
+                                            <li class="page-item prev" ng-click="pagerDiscountProduct.previous()">
+                                                <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link">{{pagerDiscountProduct.page+1}} of
+                                                    {{pagerDiscountProduct.count}}</a>
+                                            </li>
+                                            <li class="page-item next" ng-click="pagerDiscountProduct.next()">
+                                                <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                            </li>
+                                            <li class="page-item last" ng-click="pagerDiscountProduct.last()">
+                                                <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <!--/ Basic Pagination -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="menu1" class="container tab-pane fade"><br>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left align-items-center">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="discountSearch" ng-model-options="{updateOn: 'default'}"
+                                        type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                                        aria-label="Search..." />
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Code</th>
+                                            <th class="text-center">Percent</th>
+                                            <th class="text-center">Create date</th>
+                                            <th class="text-center">Start time</th>
+                                            <th class="text-center">End time</th>
+                                            <th class="text-center">Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr ng-repeat="d in pager.allDiscount | filter:discountSearch">
+                                            <td class="text-center">{{d.discountCode}}</td>
+                                            <td class="text-center">{{d.discountPercent}}%</td>
+                                            <td class="text-center">{{d.createDate | date: 'dd/MM/yyyy'}}</td>
+                                            <td class="text-center">{{d.startTime | date: 'dd/MM/yyyy'}}</td>
+                                            <td class="text-center">{{d.endTime | date: 'dd/MM/yyyy'}}</td>
+                                            <td class="text-center">
+                                                <div class="form-switch">
+                                                    <input ng-model="d.active" class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckDefaultDiscount">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="dropdown-item" ng-click="editDiscount(d)">
+                                                    <i class="bx bx-edit-alt me-1"></i>
+                                                    Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="demo-inline-spacing">
+                            <div aria-label="Page navigation">
+                                <ul class="pagination paginationCustom">
+                                    <li class="page-item first" ng-click="pager.firstDiscount()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pager.prevDiscount()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pager.pageDiscount + 1}} of {{pager.countDiscount}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pager.nextDiscount()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pager.lastDiscount()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <form class="modal-content fm-form-pr-cate">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Product list</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                            <input ng-model="productSearch" ng-model-options="{updateOn: 'default'}"
+                                class="form-control" type="search" placeholder="Search ..." id="html5-search-input" />
+                        </div>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                            <thead>
+                                <tr class="table-header">
+                                    <th colspan="2">Product</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0 tbl-show-product">
+                                <tr ng-repeat="p in pager.allProduct | filter:productSearch">
+                                    <td><img src="{{p.imageUrl}}" alt=""></td>
+                                    <td>{{p.productName}}</td>
+                                    <td>
+                                        <a id="{{p.productCode}}" onclick="add(this.id)" class="dropdown-item"
+                                            href="javascript:void(0);">
+                                            <i class="bx bx-plus-circle me-1"></i>
+                                            Add
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="demo-inline-spacing">
+                        <!-- Basic Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination paginationCustom">
+                                <li class="page-item first">
+                                    <a class="page-link" ng-click="pager.firstProduct()">
+                                        <i class="tf-icon bx bx-chevrons-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item prev">
+                                    <a class="page-link" ng-click="pager.prevProduct()">
+                                        <i class="tf-icon bx bx-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0);">
+                                        {{pager.pageProduct + 1}} of {{pager.count}}
+                                    </a>
+                                </li>
+                                <li class="page-item next">
+                                    <a class="page-link" ng-click="pager.nextProduct()">
+                                        <i class="tf-icon bx bx-chevron-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item last">
+                                    <a class="page-link" ng-click="pager.lastProduct()">
+                                        <i class="tf-icon bx bx-chevrons-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--/ Basic Pagination -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

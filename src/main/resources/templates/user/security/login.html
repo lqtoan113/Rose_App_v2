@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/security/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Login</title>
+</head>
+
+<body>
+    <div class="icon-back">
+        <a href="/"><i class="zmdi zmdi-arrow-left f-z-40 c-general"></i></a>
+    </div>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form class="form" action="" method="post" id="form-1">
+                <h1>Create Account</h1>
+                <span class="m-b-10">or use your email for registration</span>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-account-o icon"></i>
+                        <input id="fullName" name="fullName" class="form-control" type="text" placeholder="Name..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-email icon"></i>
+                        <input id="email" name="email" class="form-control" type="email" placeholder="Email..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-phone icon"></i>
+                        <input id="phoneNumber" name="phoneNumber" class="form-control" type="number"
+                            placeholder="Phone number..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-account icon"></i>
+                        <input id="username" name="username" class="form-control" type="text"
+                            placeholder="Username..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-key icon"></i>
+                        <input id="password" name="password" class="form-control" type="password"
+                            placeholder="Password..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-key icon"></i>
+                        <input id="password_confirmation" name="password_confirmation" class="form-control"
+                            type="password" placeholder="Confirm Password..." />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <span class="message" id="sign-up-message">ㅤ</span>
+                <button class="m-t-5">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form class="form" action="" method="post" id="form-2">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a class="social" href="/oauth2/authorize/facebook"><img
+                            th:src="@{user/assets/images/icons/fb_NoBackground.png}"></a>
+                    <a class="social" href="/oauth2/authorize/google"><img
+                            th:src="@{user/assets/images/icons/gg_NoBackground.png}"></a>
+                </div>
+                <span class="m-b-10">or use your account</span>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-account icon"></i>
+                        <input id="username" name="username" class="form-control" type="text" placeholder="Username" />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <i class="zmdi zmdi-key icon"></i>
+                        <input id="password" name="password" class="form-control" type="password"
+                            placeholder="Password" />
+                    </div>
+                    <span class="form-message">ㅤ</span>
+                </div>
+                <a href="/forget-password">Forgot your password?</a>
+                <span class="message" id="login-message">ㅤ</span>
+                <button>Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <img class="logo" th:src="@{user/assets/images/logo-removebg.png}" alt="">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <img class="logo" th:src="@{user/assets/images/logo-removebg.png}" alt="">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

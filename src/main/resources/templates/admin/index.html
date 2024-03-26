@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="dynamic(view)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminations Web</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{user/assets/images/logo-removebg.png}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" th:href="@{|/admin/assets/fonts/boxicons.css|}" />
+    <!-- Core CSS -->
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/core.css|}" class="template-customizer-core-css" />
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/theme-default.css|}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/demo.css|}" />
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/tags-input.css|}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" th:href="@{|/admin/assets/libs/perfect-scrollbar/perfect-scrollbar.css|}" />
+
+    <link rel="stylesheet" th:href="@{|/admin/assets/libs/apex-charts/apex-charts.css|}" />
+    <!-- Helpers -->
+    <script th:src="@{|/admin/assets/js/helpers.js|}"></script>
+    <script th:src="@{|/admin/assets/js/config.js|}"></script>
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <base href="/" />
+</head>
+
+<body ng-app="myApp">
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <div th:replace="~{/admin/components/vertical-menu.html}"></div>
+            <div th:replace="~{/admin/components/order-detail.html}"></div>
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Search menu -->
+                <div th:replace="~{/admin/components/search-menu.html}"></div>
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div th:replace="${view}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script th:src="@{admin/assets/libs/jquery/jquery.js}"></script>
+    <script th:src="@{admin/assets/libs/popper/popper.js}"></script>
+    <script th:src="@{admin/assets/js/bootstrap.js}"></script>
+    <script th:src="@{admin/assets/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+
+    <script th:src="@{admin/assets/js/menu.js}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script th:src="@{admin/assets/libs/apex-charts/apexcharts.js}"></script>
+
+    <!-- Main JS -->
+    <script th:src="@{admin/assets/js/main.js}"></script>
+
+    <!-- Page JS -->
+    <script th:src="@{admin/assets/js/dashboards-analytics.js}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script th:src="@{admin/assets/js/tags-input.js}"></script>
+
+    <!-- Admin ctrl -->
+    <script>
+        var app = angular.module('myApp', [])
+        app.constant("moment", moment);
+    </script>
+    <script th:src="@{admin/assets/js/account-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/product-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/color-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/authority-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/order-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/size-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/summary-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/category-ctrl.js}"></script>
+    <script th:src="@{admin/assets/js/discount-ctrl.js}"></script>
+</body>
+
+</html>

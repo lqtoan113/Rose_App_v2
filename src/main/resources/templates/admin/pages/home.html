@@ -1,0 +1,266 @@
+    <!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Web</title>
+</head>
+
+<body ng-controller="summary-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-lg-8 mb-4 order-0">
+                <div class="col-lg-4 col-md-4 order-1 ">
+                    <div class="d-flex">
+                        <div class="col-8 col-md-12 col-6 mb-4">
+                            <div class="card">
+                                <div class="card-body h-pt">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar flex-shrink-0">
+                                            <img th:src="@{admin/assets/img/icons/unicons/chart-success.png}"
+                                                 alt="chart success" class="rounded" />
+                                            <span class="fw-semibold d-block mb-1 ml-mt">Orders</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-sm-5">
+                                            <h5 class="card-title mb-2">Today: {{todayOrder.data}}</h5>
+                                            <h5 class="card-title mb-2">Total: {{totalOrderToday}}</h5>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                            <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 col-md-12 col-6 mb-4 ms-3">
+                            <div class="card">
+                                <div class="card-body h-pt">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar flex-shrink-0">
+                                            <img th:src="@{admin/assets/img/icons/unicons/wallet-info.png}"
+                                                 alt="Credit Card" class="rounded" />
+                                            <span class="fw-semibold d-block mb-1 ml-mt">Products</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-sm-7">
+                                            <h5 class="card-title mb-2">Available: {{available.data}}</h5>
+                                            <h5 class="card-title mb-2">Total: {{totalProduct.data}}</h5>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                            <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-8 col-md-12 col-6 mb-4 ms-3">
+                            <div class="card">
+                                <div class="card-body h-pt">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar flex-shrink-0">
+                                            <img th:src="@{admin/assets/img/icons/unicons/paypal.png}" alt="Credit Card"
+                                                 class="rounded" />
+                                            <span class="fw-semibold d-block mb-1 ml-mt">Income</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-sm-7">
+                                            <h5 class="card-title mb-2" ng-model="todayIncome.data">Today: {{todayIncome.data}}</h5>
+                                            <h5 class="card-title mb-2">Total: {{totalIncome.data|number:0}}$</h5>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                            <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8 col-md-12 col-6 mb-4 ms-3">
+                            <div class="card">
+                                <div class="card-body h-pt">
+                                    <div class="card-title d-flex align-items-start justify-content-between">
+                                        <div class="avatar flex-shrink-0">
+                                            <img th:src="@{admin/assets/img/icons/unicons/cc-primary.png}" alt="Credit Card"
+                                                 class="rounded" />
+                                            <span class="fw-semibold d-block mb-1 ml-mt">Accounts</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-sm-7">
+                                            <h5 class="card-title mb-2">Customers: {{firstRow.totalCustomer}}</h5>
+                                            <h5 class="card-title mb-2">Total: {{totalAccount.data}}</h5>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                                            <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card h-fc">
+                    <div class="d-flex align-items-end row">
+                        <div class="col-sm-7">
+                            <div class="card-body">
+                                <i class='bx bx-time mb-3'> <span id = "clock" onload="currentTime()"></span></i>
+                                <h5 class="card-title text-primary">Hello {{profiles.fullName}} 🎉</h5>
+                                <p>Have a nice day!!!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 text-center text-sm-left">
+                            <div class="card-body pb-0 px-0 px-md-4">
+                                <img th:src="@{admin/assets/img/illustrations/man-with-laptop-light.png}" height="140"
+                                    alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                    data-app-light-img="illustrations/man-with-laptop-light.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Revenue -->
+            <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4 mt-200 h-fc total-revenue">
+                <div class="card">
+                    <div class="row row-bordered g-0">
+                        <div class="col-md-12">
+                            <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
+                            <div id="totalRevenueChart" class="px-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Total Revenue -->
+            <!-- Order Statistics -->
+            <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4 static-order">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                        <div class="card-title text-center mb-0">
+                            <h5 class="m-0 me-2">Top 3 Customers Who Buy The Most <i class='bx bxl-shopify' ></i></h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-sm-5 text-center text-sm-left">
+                            <div class="card-body pb-0 px-0 px-md-4">
+                                <img th:src="@{admin/assets/img/illustrations/shopper2.png}" height="140"
+                                     alt="View Badge User" data-app-dark-img="illustrations/shopper2.png"
+                                     data-app-light-img="illustrations/shopper2.png" />
+                            </div>
+                        </div>
+                        <ul class="p-0 m-0">
+                            <li class="d-flex mb-4 pb-1">
+                                <div class="avatar flex-shrink-0 me-3" >
+                                    <span class="avatar-initial rounded bg-label-primary">
+                                       <img src="{{top10customerImage[0]}}"/>
+                                    </span>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2" >
+                                        <h6 class="mb-0">{{top10customerUsername[0]}}</h6>
+                                        <small class="text-muted">{{top10customerFullname[0]}}</small>
+                                    </div>
+                                    <div class="user-progress">
+                                        <small class="fw-semibold">${{top10customerMoney[0]}}</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-4 pb-1">
+                                <div class="avatar flex-shrink-0 me-3">
+                                    <span class="avatar-initial rounded bg-label-success">
+                                         <img src="{{top10customerImage[1]}}"/>
+                                    </span>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">{{top10customerUsername[1]}}</h6>
+                                        <small class="text-muted">{{top10customerFullname[1]}}</small>
+                                    </div>
+                                    <div class="user-progress">
+                                        <small class="fw-semibold">${{top10customerMoney[1]}}</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="d-flex mb-4 pb-1">
+                                <div class="avatar flex-shrink-0 me-3">
+                                    <span class="avatar-initial rounded bg-label-info">
+                                        <img src="{{top10customerImage[1]}}"/>
+                                    </span>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">{{top10customerUsername[2]}}</h6>
+                                        <small class="text-muted">{{top10customerFullname[2]}}</small>
+                                    </div>
+                                    <div class="user-progress">
+                                        <small class="fw-semibold">${{top10customerMoney[2]}}</small>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button
+                        type="button"
+                        class="btn btn-primary top10sold"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exLargeModal">
+                    Top 10 best selling
+                </button>
+            </div>
+            <!--/ Order Statistics -->
+
+        </div>
+
+        <div class="modal fade" id="exLargeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel4">Statistics</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4 order-2 mb-4">
+                                <div style="width: 1085px" class="card">
+                                    <div class="card-header d-flex align-items-center justify-content-between">
+                                        <h5 class="card-title m-0 me-2">Top 6 best selling</h5>
+                                    </div>
+                                    <div style="width: 1117px" class="card-body">
+                                        <div id="top10product" class="px-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        top6-->
+    </div>
+    <!-- / Content -->
+    <div class="content-backdrop fade"></div>
+</body>
+
+</html>

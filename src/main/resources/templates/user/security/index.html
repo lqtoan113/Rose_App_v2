@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="dynamic(view)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose security</title>
+    <!-- Icon -->
+    <link rel="icon" type="image/png" th:href="@{|/user/assets/images/logo-removebg.png|}" />
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{|/user/assets/fonts/iconic/css/material-design-iconic-font.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/fonts/linearicons-v1.0.0/icon-font.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/css/login.css|}">
+    <!-- reCaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldp6jUjAAAAABdndzKPagfV1IPkOebJVzzpVDgB"></script>
+    <base href="/" />
+</head>
+
+<body>
+    <!-- Content -->
+    <div th:replace="${view}"></div>
+
+    <!-- JS -->
+    <script th:src="@{user/assets/vendor/sweetalert/sweetalert.min.js}"></script>
+    <script th:src="@{user/assets/js/login.js}"></script>
+    <script th:src="@{user/assets/js/validate-handle.js}"></script>
+    <script th:src="@{user/assets/js/login-handle.js}"></script>
+</body>
+
+</html>

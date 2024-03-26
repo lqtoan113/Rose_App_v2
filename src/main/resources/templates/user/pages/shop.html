@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSE</title>
+</head>
+
+<body>
+    <div class="bg0 m-t-23 m-b-100">
+        <div class="container">
+            <div class="flex-w flex-sb-m p-b-52">
+                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                    <button class="stext-106 cl4 hov1 bor3 trans-04 m-tb-5" ng-click="initProduct()">
+                        All Products
+                    </button>
+
+                    <button ng-repeat="c in allCate" ng-click="getPageByCate(c)"
+                        class="stext-106 cl4 hov1 bor3 trans-04 m-tb-5">
+                        {{c}}
+                    </button>
+                </div>
+
+                <div class="flex-w flex-c-m m-tb-10">
+                    <div class="flex-c-m stext-106 cl4 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+                        <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+                        <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                        Search
+                    </div>
+                </div>
+
+                <!-- Search product -->
+                <div class="dis-none panel-search w-full p-t-10 p-b-15">
+                    <div class="bor8 dis-flex p-l-15 autocomplete">
+                        <div style="width: 38px;" class="flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                            <i class="zmdi zmdi-search"></i>
+                        </div>
+
+                        <input id="myInput" ng-model="search" ng-keydown="$event.keyCode===13 && searchElastic()"
+                            class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
+                            placeholder="Search">
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="allProduct">
+                <div class="row">
+                    <div ng-repeat="p in pager.allProduct" class="col-sm-6 col-md-4 col-lg-3 p-b-35">
+                        <!-- Block2 -->
+                        <div class="block2">
+                            <div class="block2-pic hov-img0 wrap-product">
+                                <a href="/product-detail/{{p.productCode}}">
+                                    <img src="{{p.imageUrl}}" alt="IMG-PRODUCT">
+                                </a>
+                                <div ng-if="p.discountPercent > 0" class="wrap-discount">
+                                    <div class="display-discount">
+                                        <span class="percent">{{p.discountPercent}}%</span>
+                                        <span class="reduce">discount</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a href="/product-detail/{{p.productCode}}"
+                                        class="mtext-106 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 f-s-15">
+                                        {{p.productName}}
+                                    </a>
+
+                                    <div class="d-f flex-sb w-full">
+                                        <div class="d-f flex-m">
+                                            <del ng-if="p.discountPercent > 0"
+                                                class="strike-price1">${{p.commonPrice}}</del>
+                                            <span class="mtext-106 cl3 fs-18">
+                                                {{p.commonPrice * (100 - p.discountPercent) / 100 | currency : "$"}}
+                                            </span>
+                                        </div>
+                                        <span class="mtext-106 4 f-s-15">
+                                            Sold {{p.sold}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="demo-inline-spacing">
+                        <!-- Basic Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination paginationCustom">
+                                <li class="page-item first">
+                                    <a class="page-link" ng-click="pager.firstProduct()">
+                                        <i class="tf-icon bx bx-chevrons-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item prev">
+                                    <a class="page-link" ng-click="pager.prevProduct()">
+                                        <i class="tf-icon bx bx-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0);">{{pager.pageProduct + 1}} of
+                                        {{pager.count}}</a>
+                                </li>
+                                <li class="page-item next">
+                                    <a class="page-link" ng-click="pager.nextProduct()">
+                                        <i class="tf-icon bx bx-chevron-right"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item last">
+                                    <a class="page-link" ng-click="pager.lastProduct()">
+                                        <i class="tf-icon bx bx-chevrons-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!--/ Basic Pagination -->
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!allProduct">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 txt-center">
+                        Don't have any product
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

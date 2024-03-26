@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSE</title>
+</head>
+
+<body>
+    <div class="order-status order-success">
+        <div class="top-part">
+            <div ng-if="orderDetailPayment.paymentMethod != 'VN_PAY'">
+                <div class="paid">
+                    <i class="zmdi zmdi-check-circle icon-payment"></i>
+                    <h3>
+                        <span class="payment-success">
+                            Order success
+                        </span>
+                    </h3>
+                </div>
+            </div>
+            <div ng-if="orderDetailPayment.paymentMethod === 'VN_PAY'">
+                <div class="paid" ng-if="orderDetailPayment.paymentStatus === 'SUCCESS'">
+                    <i class="zmdi zmdi-check-circle icon-payment"></i>
+                    <h3>
+                        <span class="payment-success">
+                            Payment success
+                        </span>
+                    </h3>
+                </div>
+                <div class="unpaid"
+                    ng-if="orderDetailPayment.paymentStatus === 'PENDING' || orderDetailPayment.paymentStatus === 'FAILURE'">
+                    <i class="zmdi zmdi-money-off icon-payment"></i>
+                    <h3>
+                        <span class="payment-failed">
+                            Payment fail
+                        </span>
+                    </h3>
+                </div>
+            </div>
+            <div class="order-message">
+                <div class="row g-2 m-b-10 txt-left">
+                    <div class="col mb-0">
+                        <label for="nameLarge" class="form-label">Order id</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-card"></i>
+                            </span>
+                            <input type="text" id="nameLarge" class="form-control" value="{{orderDetail.id}}"
+                                disabled />
+                        </div>
+                    </div>
+                    <div class="col mb-0">
+                        <label for="dobLarge" class="form-label">Status</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-puzzle-piece"></i>
+                            </span>
+                            <input type="text" id="dobLarge" class="form-control" value="{{orderDetail.status}}"
+                                disabled />
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="orderDetailPayment.paymentStatus === 'SUCCESS'" class="row g-2 m-b-10 txt-left">
+                    <div class="col mb-0">
+                        <label for="bankName" class="form-label">Bank name</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-balance"></i>
+                            </span>
+                            <input type="text" id="bankName" class="form-control"
+                                value="{{orderDetailPayment.vnp_BankCode}}" disabled />
+                        </div>
+                    </div>
+                    <div class="col mb-0">
+                        <label for="paymentDate" class="form-label">Payment date</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-calendar-note"></i>
+                            </span>
+                            <input type="text" id="paymentDate" class="form-control"
+                                value="{{orderDetailPayment.payDate | date:'dd/MM/yyyy'}}" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3 txt-left">
+                        <label for="emailLarge" class="form-label">Address</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-pin"></i>
+                            </span>
+                            <input type="text" id="emailLarge" class="form-control" value="{{orderDetail.address}}"
+                                disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive text-nowrap table-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="odl in orderDetailList" class="table-border-bottom-0">
+                                <tr>
+                                    <td><img width="50px" src="{{odl.product.image.imageUrl}}" alt=""></td>
+                                    <td>{{odl.size.sizeValue}}</td>
+                                    <td>{{odl.product.color.colorName}}</td>
+                                    <td>{{odl.quantity}}</td>
+                                    <td>
+                                        <del>${{odl.totalPrice}}</del>
+                                        <span>${{odl.finalPrice}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-f order-total">
+                        <span>TOTAL:</span>
+                        <del class="m-r-5 m-l-5" ng-if="orderDetail.totalPriceOrder > orderDetail.finalPriceOrder">
+                            ${{orderDetail.totalPriceOrder}}
+                        </del>
+                        <span class="cl3">${{orderDetail.finalPriceOrder}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="group-success">
+            <a href="/order-list"><button type="button" class="btn btn-primary">View orders</button></a>
+            <a href="/shop"><button type="button" class="btn btn-primary">Continue shopping</button></a>
+            <button ng-if="paymentAgainBtn" type="button" class="btn btn-danger"
+                ng-click="payAgain(orderDetailPayment.vnp_PayUrl)">Pay again</button>
+        </div>
+    </div>
+</body>
+
+</html>

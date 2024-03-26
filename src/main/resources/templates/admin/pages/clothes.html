@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminations Clothes</title>
+    <style>
+        .original-color {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body ng-controller="product-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Clothes Settings /</span> Clothes</h4>
+        <div class="row d-f">
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-start">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0 icon-pro">
+                                <span class="avatar-initial rounded bg-label-info">
+                                    <i class="bx bx-closet"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">Available</span>
+                                <h3 class="card-title mb-2 color-green mg-lp">{{productsAvailable.data}}</h3>
+                            </div>
+                            <div class="summary-product">
+                                <span class="fw-semibold d-block mb-1">UnAvailable</span>
+                                <h3 class="card-title mb-2 color-red mg-lp1">2</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0 icon-pro1">
+                                <span class="avatar-initial rounded bg-label-success">
+                                    <img src="https://storage.googleapis.com/agile-being-318113.appspot.com/38a636f2-3498-4b31-a1b1-ba2cbbf84128">
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1 font-s">T-Shirt Do It With Passion</span>
+                                <h3 class="card-title mb-2">3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-end">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <img src="https://storage.googleapis.com/agile-being-318113.appspot.com/d1f4536f-f699-4c51-b1dc-ade09c139d8d">
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1 font-s">T-Shirt Unisex red</span>
+                                <h3 class="card-title mb-2">12</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-end">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0 icon-pro1">
+                                <span class="avatar-initial rounded bg-label-danger">
+                                    <img src="https://storage.googleapis.com/agile-being-318113.appspot.com/afd2f236-abd0-4ffa-86b1-b18fb038bcdb">
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1 font-s">Couple Coat Unisex Blue</span>
+                                <h3 class="card-title mb-2">20</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-product" data-bs-toggle="pill" href="#home">
+                            <img th:src="@{/admin/assets/img/icons/brands/dresscode.png}" alt="">
+                            Edit Clothes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a ng-click="initProducts()" class="nav-link" data-bs-toggle="pill" href="#menu1"><i
+                                class='bx bx-list-ol me-1'></i>
+                            Clothes list</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="card mb-4">
+                            <h5 class="card-header">Product Details</h5>
+                            <!-- Account -->
+                            <div class="card-body">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <img ng-src="{{form.imageUrl}}" class="d-block img-clothes" id="uploadedAvatar" />
+                                    <div class="button-wrapper">
+                                        <label class="btn btn-primary me-2 mb-4 pr-pl-10" tabindex="0">
+                                            <input type="file" class="form-control" id="image"
+                                                onchange="angular.element(this).scope().imageChanged(this.files)"
+                                                accept="image/*">
+                                        </label>
+                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 10mb</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-0" />
+                            <div class="card-body">
+                                <form id="formAccountSettings" method="POST" onsubmit="return false" name="frmpro">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-3 col-form-label text-blk" for="productCode">Product
+                                                Code</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-productCode" class="input-group-text">
+                                                        <i class='bx bx-barcode'></i></span>
+                                                    <input class="form-control" ng-model="form.productCode"
+                                                        name="productCode" minlength="2" maxlength="50" type="text"
+                                                        ng-pattern="/^[a-zA-Z0-9 ._-]+$/" id="productCode"
+                                                        placeholder="Enter product code..." aria-label="TS4321"
+                                                        aria-describedby="basic-icon-default-productCode" required />
+                                                </div>
+                                                <span style="color: red" class="failure"
+                                                    ng-show="frmpro.productCode.$error.pattern">
+                                                    You cannot enter special characters!!!</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-3 col-form-label text-blk"
+                                                for="basic-icon-default-productName">Product Name</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-productName" class="input-group-text">
+                                                        <i class='bx bx-closet'></i></span>
+                                                    <input class="form-control" ng-model="form.productName"
+                                                        name="productName" maxlength="50" type="text"
+                                                        id="basic-icon-default-productName"
+                                                        placeholder="Enter product name..." aria-label="TS4321"
+                                                        ng-pattern="/^([a-zA-Z'&-_()\s])+$/"
+                                                        aria-describedby="basic-icon-default-productCode" required />
+                                                </div>
+                                                <span style="color: red" class="failure"
+                                                    ng-show="frmpro.productName.$error.pattern">
+                                                    Please enter product name without accents</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-3 col-form-label text-blk"
+                                                for="basic-icon-default-productName">Common Price</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-commonPrice" class="input-group-text">
+                                                        <i class='bx bx-purchase-tag'></i></span>
+                                                    <input class="form-control" type="numer" ng-model="form.commonPrice"
+                                                        name="commonPrice" minlength="0"
+                                                        placeholder="Enter product common price..." ng-pattern="/^[0-9]+(\.[0-9]{1,5})?$/"
+                                                        required />
+                                                </div>
+                                                <span style="color: red" ng-show="frmpro.commonPrice.$error.pattern">
+                                                    Your product price cannot be negative !
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-top: -30px;" class="mb-3 col-md-6">
+
+                                            <div class="form-check mt-3 ml-pr">
+                                                <label class="col-form-label text-blk">Available</label>
+                                                <div class="form-check form-switch">
+                                                    <input ng-model="form.available" class="form-check-input"
+                                                        type="checkbox" id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-3 col-form-label text-blk"
+                                                for="basic-icon-default-description">Description</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-description" class="input-group-text">
+                                                        <i class='bx bxs-note'></i></span>
+                                                    <textarea class="form-control" type="text" style="height: 140px"
+                                                        ng-model="form.description" name="description" minlength="0"
+                                                        maxlength="255" placeholder="Please enter description...">
+                                                </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <button ng-click="createProduct()" class="btn btn-outline-primary me-2"><i
+                                                    class='bx bxs-add-to-queue'></i></button>
+                                            <button ng-click="updateProduct()" class="btn btn-outline-warning me-2"><i
+                                                    class='bx bx-save'></i></button>
+                                            <button ng-click="reset()" class="btn btn-outline-secondary"><i
+                                                    class='bx bx-refresh'></i></button>
+                                            <button ng-click="addFormProductEntry()" class="btn btn-outline-success"><i
+                                                    class='bx bx-plus'></i></button>
+
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                                <hr>
+                                <!-- /product-entry -->
+                                <button type="button" class="btn btn-primary active d-block" data-bs-toggle="button"
+                                    autocomplete="off" aria-pressed="true" onclick="myFunction()">
+                                     <small>Collapse tabs</small>
+                                    <i class='bx bx-chevron-down'></i>
+                                </button>
+                                <div id="myDIV">
+                                    <div class="addcontend">
+                                        <div ng-repeat="productEntries in productEntries">
+
+                                            <div class="col-xxl">
+                                                <div class="card mb-4">
+                                                    <div style="display: flex">
+                                                        <a ng-click="DeleteFormProductEntry($index)"
+                                                            style="position: absolute;font-size: 27px;margin-left: 21px;">
+                                                            <i class='bx bxs-message-square-x deletetab'></i>
+                                                        </a>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex align-items-start align-items-sm-center gap-4 imageProductEntry">
+                                                        <div class="button-wrapper">
+                                                            <label class="btn btn-primary me-2 mb-4 pr-pl-10"
+                                                                tabindex="0">
+                                                                <input type="file" class="form-control image-entry"
+                                                                    onchange="angular.element(this).scope().imageChangedEnTry(this)"
+                                                                    accept="image/*" />
+                                                            </label>
+                                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
+                                                                of 10mb</p>
+                                                            <img ng-src="{{productEntries.imageUrl}}"
+                                                                class="d-block rounded img-clothes" id="{{productEntries.sku}}"/>
+                                                        </div>
+
+                                                        <div style="padding-left: 50px;width: 60%;" class="card-body">
+                                                            <form style="width: 565px;" name="frmproen">
+                                                                <div class="row mb-4">
+                                                                    <label class="col-sm-2 col-form-label text-blk" for="sku">SKU
+                                                                        :</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input ng-model="productEntries.sku" type="text"
+                                                                            id="sku" name="sku" maxlength="20"
+                                                                            class="form-control"
+                                                                            placeholder="DS-DT_4_PO"
+                                                                            ng-pattern="/^[a-zA-Z0-9 ._-]+$/"
+                                                                            required />
+                                                                        <span style="color: red;font-size: 13px"
+                                                                            class="failure"
+                                                                            ng-show="frmproen.sku.$error.pattern">
+                                                                            You cannot enter special characters!!!
+                                                                        </span>
+                                                                    </div>
+                                                                    <label class="col-sm-2 col-form-label text-blk"
+                                                                        for="quantity">Quantity :</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input ng-model="productEntries.quantity"
+                                                                            type="number" name="quantity"
+                                                                            id="quantity $index" class="form-control"
+                                                                            placeholder="100" ng-pattern="/^[0-9]+(\.[0-9]{1,5})?$/"
+                                                                            required />
+                                                                        <span style="color: red;font-size: 13px"
+                                                                            ng-show="frmproen.quantity.$error.pattern">
+                                                                            Your product price cannot be negative !
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <label class="col-sm-2 col-form-label text-blk"
+                                                                        for="price">Price :</label>
+                                                                    <div class="col-sm-6">
+                                                                            <input
+                                                                                ng-model="productEntries.productPrice"
+                                                                                name="price" type="number"
+                                                                                class="form-control" id="price"
+                                                                                placeholder="12" ng-pattern="/^[0-9]+(\.[0-9]{1,5})?$/"
+                                                                                required />
+                                                                            <span style="color: red;font-size: 13px"
+                                                                                ng-show="frmproen.price.$error.pattern">
+                                                                                Your product price cannot be negative !
+                                                                            </span>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="row mb-3 ">
+                                                                    <label class="col-sm-2 col-form-label text-blk"
+                                                                        for="basic-default-color">Color :</label>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="mb-3">
+                                                                            <select ng-model="productEntries.colorValue"
+                                                                                class="form-select"
+                                                                                id="exampleFormControlSelect2"
+                                                                                aria-label="Default select example">
+                                                                                <!--                                                                            <option >Open this select colors</option>-->
+                                                                                <option value="">--Select color--
+                                                                                </option>
+                                                                                <option class="original-color"
+                                                                                    ng-style="style(color.colorValue)"
+                                                                                    ng-repeat="color in colors"
+                                                                                    ng-value="color.colorValue">
+                                                                                    {{color.colorName}}
+                                                                                </option>
+
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="d-flex mb-3">
+                                                                    <label class="col-sm-2 col-form-label text-blk">Size :
+                                                                    </label>
+                                                                    <div style="margin-top: -25px;" class="col-sm-4">
+                                                                        <div class="form-check form-check-inline mt-3"
+                                                                             ng-repeat="size in sizes">
+                                                                            <input class="form-check-input"
+                                                                                   ng-value="size.sizeValue"
+                                                                                   type="checkbox" name="sizeRadio"
+                                                                                   id="{{size.sizeValue}}"
+                                                                                   ng-checked="productEntries.sizeValue.indexOf(size.sizeValue) > -1"
+                                                                                   ng-click="toggleSelection(size.sizeValue, $parent.$index)" />
+
+                                                                            <label for={{size.sizeValue}} class="radio">
+                                                                                <span class="colorText">
+                                                                                    {{size.sizeValue}}
+                                                                                </span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label id="sold" class="col-sm-12 col-form-label text-blk">Sold : {{productEntries.sold}}
+                                                                        </label>
+                                                                        <label id="revenue" class="col-sm-12 col-form-label text-blk">Revenue: {{productEntries.revenue}}
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="avalable-w">
+                                                                        <label class="col-sm-12 col-form-label available-prentry text-blk">Available :
+                                                                        </label>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-check form-switch">
+                                                                                <input ng-model="productEntries.available"
+                                                                                       class="form-check-input" type="checkbox"
+                                                                                       id="flexSwitchCheckDefault">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="dropdown active-entry">
+                                                                            <button type="button"
+                                                                                    class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                    data-bs-toggle="dropdown">
+                                                                                <i
+                                                                                        class="bx bx-dots-vertical-rounded"></i>
+                                                                            </button>
+                                                                            <div class="dropdown-menu">
+                                                                                <a class="dropdown-item"
+                                                                                   ng-click="updateProEntry($index)"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    Update</a>
+                                                                                <a class="dropdown-item" ng-if="!productEntries.available"
+                                                                                   ng-click="deleteProEntry($index)"><i
+                                                                                        class="bx bx-trash me-1"></i>
+                                                                                    Available</a>
+                                                                                <a class="dropdown-item" ng-if="productEntries.available"
+                                                                                   ng-click="deleteProEntry($index)"><i
+                                                                                        class="bx bx-trash me-1"></i>
+                                                                                    UnAvailable</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /product -->
+                            <!-- /product-entry -->
+
+                        </div>
+                    </div>
+                    <div id="menu1" class="container tab-pane fade"><br>
+                        <div class="col-sm-3">
+                            <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-sort" class="input-group-text inp-sort">
+                                <i class='bx bx-filter-alt'></i></span>
+                                <select id="smallSelect" class="form-select form-select-sm selectClothes"
+                                        ng-options="prop for prop in props" ng-model="sort">
+                                    <option value="">  Select to sort  </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="search" ng-keydown="$event.keyCode===13 && searchElastic()"
+                                        type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                                        aria-label="Search..." />
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Image</th>
+                                            <th>Name</th>
+                                            <th class="text-center">Sold</th>
+                                            <th class="text-center">Rating</th>
+                                            <th class="text-center">Revenue</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">Available</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr ng-repeat="product in  pagerProducts.products | orderBy:sort">
+                                            <td class="text-center"><img src="{{product.imageUrl}}" alt="IMG" height="110px"></td>
+                                            <td class="font-size-pr">
+                                                {{product.productName}} -
+                                                <span class="discount-color" ng-if="product.discountPercent > 0">Sale {{product.discountPercent}}%</span>
+                                            </td>
+                                            <td class="text-center">{{product.sold}}</td>
+                                            <td class="text-center">{{product.avgRating}}</td>
+                                            <td class="text-center">${{product.revenue}}</td>
+                                            <td class="text-center">{{product.commonPrice}}</td>
+                                            <td class="text-center">
+                                                <div class="form-switch">
+                                                    <input ng-model="product.available"
+                                                        class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault" checked>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button"
+                                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown">
+                                                        <i
+                                                                class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" ng-click="editProduct(product)"><i
+                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                        <a class="dropdown-item" ng-if="product.available" ng-click="deleteProduct(product.productCode)">
+                                                            <i class='bx bx-bell-off'></i> UnAvailable</a>
+                                                        <a class="dropdown-item" ng-if="!product.available" ng-click="deleteProduct(product.productCode)">
+                                                            <i class='bx bx-bell' ></i> Available</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="demo-inline-spacing">
+                            <!-- Basic Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item first" ng-click="pagerProducts.first()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pagerProducts.previous()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pagerProducts.page + 1}} of {{pagerProducts.count}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pagerProducts.next()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pagerProducts.last()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--/ Basic Pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

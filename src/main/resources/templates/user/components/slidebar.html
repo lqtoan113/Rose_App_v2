@@ -1,0 +1,100 @@
+<!-- Sidebar -->
+<aside class="wrap-sidebar js-sidebar">
+  <div class="s-full js-hide-sidebar"></div>
+
+  <div class="sidebar flex-col-l p-t-22 p-b-25">
+    <div class="flex-r w-full p-b-30 p-r-27">
+      <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar">
+        <i class="zmdi zmdi-close"></i>
+      </div>
+    </div>
+
+    <div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
+      <ul class="sidebar-link w-full">
+        <li class="p-b-13">
+          <a href="/" class="stext-102 cl2 hov-cl1 trans-04">
+            <i class="zmdi zmdi-home m-r-5"></i>
+            Home
+          </a>
+        </li>
+
+        <li ng-if=permission class="p-b-13 m-r-5">
+          <a href="/admin/accounts" class="stext-102 cl2 hov-cl1 trans-04">
+            <i class="zmdi zmdi-accounts-list-alt"></i>
+            Admin
+          </a>
+        </li>
+
+        <li ng-if="profile.provider == 'local'" class="p-b-13 m-r-5">
+          <a href="/change-password" class="stext-102 cl2 hov-cl1 trans-04">
+            <i class="zmdi zmdi-lock"></i>
+            Change password
+          </a>
+        </li>
+
+        <li ng-if=profile class="p-b-13 m-r-5">
+          <a href="#" class="stext-102 cl2 hov-cl1 trans-04" ng-click="logout()">
+            <i class="zmdi zmdi-sign-in"></i>
+            Logout
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-gallery w-full p-tb-30">
+        <span class="mtext-101 cl5">
+          @ RÓSE Team
+        </span>
+
+        <div class="flex-w flex-sb p-t-36 gallery-lb">
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-01.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-01.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-02.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-02.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-03.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-03.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-04.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-04.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-05.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-05.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-06.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-06.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-07.jpg}" data-lightbox="gallery"
+              style="background-image: url('user/assets/images/gallery-07.jpg');"></a>
+          </div>
+
+          <!-- item gallery sidebar -->
+          <div class="wrap-item-gallery m-b-10">
+            <a class="item-gallery bg-img1" th:href="@{user/assets/images/gallery-08.jpg}" data-lightbox="gallery"
+              style="background-image: url('images/gallery-08.jpg');"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Admin</title>
+</head>
+
+<body ng-controller="account-ctrl">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+        <div class="row d-f">
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-start">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-success">
+                                    <i class='bx bx-user'></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">User Active</span>
+                                <h3 class="card-title mb-2">{{userActive.data}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-info">
+                                    <i class='bx bx-male'></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">Male</span>
+                                <h3 class="card-title mb-2">{{totalMaleUser.data}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-end">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <i class='bx bx-female'></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">Female</span>
+                                <h3 class="card-title mb-2">{{totalFemaleUser.data}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2-2 col-md-6 col-6 mb-4 mt-2 ms-4 align-self-end">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex align-items-start justify-content-between">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-danger">
+                                    <i class='bx bx-body'></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span class="fw-semibold d-block mb-1">Other</span>
+                                <h3 class="card-title mb-2">{{totalFemaleUser.data}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-account" data-bs-toggle="pill" href="#home"><i
+                                class="bx bx-user me-1"></i>
+                            Edit account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="pill" href="#menu1" ng-click="init()"><i
+                                class='bx bx-list-ol me-1'></i>
+                            Accounts list</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="home" class="container tab-pane active"><br>
+                        <div class="card mb-4">
+                            <h5 class="card-header">Account Details</h5>
+                            <!-- Account -->
+                            <div class="card-body">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4 image-account-mg">
+                                    <img ng-src="{{form.photo}}" class="d-block img-account" height="210"
+                                        width="181" id="uploadedAvatar" />
+                                    <div class="button-wrapper col-sm-12">
+                                        <label for="image" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">
+                                                   <i class='bx bx-cloud-upload' ></i>
+                                            </span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file" id="image"
+                                                onchange="angular.element(this).scope().imageChanged(this.files)"
+                                                class="account-file-input" hidden accept="image/png, image/jpeg" />
+                                        </label>
+                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 5mb</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-0" />
+                            <div class="card-body">
+                                <form id="formAccountSettings" method="POST" onsubmit="return false" name="frmacc">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 col-form-label"
+                                                for="basic-icon-default-fullname">UserName</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                        <i class='bx bxs-user-plus'></i></span>
+                                                    <input class="form-control" ng-model="form.username" name="username"
+                                                        maxlength="50" ng-pattern="/^[a-zA-Z0-9 ._-@]+$/" type="text"
+                                                        id="username" placeholder="Enter username..."
+                                                        aria-label="John Doe"
+                                                        aria-describedby="basic-icon-default-fullname2" required />
+                                                </div>
+                                            </div>
+                                            <span style="color: red" class="failure"
+                                                ng-show="frmacc.username.$error.pattern">
+                                                You cannot enter special characters!!!
+                                            </span>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 col-form-label"
+                                                for="basic-icon-default-fullname">FullName</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                        <i class='bx bxs-user-detail'></i></span>
+                                                    <input class="form-control" ng-model="form.fullName" name="fullName"
+                                                        minlength="5" maxlength="25" ng-pattern="/^([a-zA-Z'_()\s])+$/"
+                                                        type="text" id="basic-icon-default-fullname"
+                                                        placeholder="Enter fullname..." aria-label="John Doe"
+                                                        aria-describedby="basic-icon-default-fullname2" required />
+                                                </div>
+                                            </div>
+                                            <span style="color: red" id="fullname" class="failure"
+                                                ng-show="frmacc.fullName.$error.pattern">
+                                                Please enter your first and last name without accents</span>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-6 form-label" for="basic-icon-default-phone">Phone
+                                                Number</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-phone2" class="input-group-text">
+                                                        <i class="bx bx-phone"></i></span>
+                                                    <input ng-model="form.phone" name="phone" minlength="10" type="text"
+                                                        id="basic-icon-default-phone" class="form-control phone-mask"
+                                                        placeholder="0945878645"
+                                                        aria-describedby="basic-icon-default-phone2"
+                                                        ng-pattern="/(84|0[3|5|7|8|9])+([0-9]{8})\b/" maxlength="10"
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <span style="color:Red"
+                                                ng-show="frmacc.phone.$dirty&&frmacc.phone.$error.pattern">
+                                                Your phone number is not valid!</span>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 form-label"
+                                                for="basic-icon-default-phone">Password</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-phone2" class="input-group-text">
+                                                        <i class='bx bxs-key'></i></span>
+                                                    <input ng-model="form.password" name="password" type="password"
+                                                        id="basic-icon-default-phone" class="form-control phone-mask"
+                                                        placeholder="******" aria-label="******"
+                                                        aria-describedby="basic-icon-default-phone2" maxlength="255"
+                                                        ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
+                                                        required />
+                                                </div>
+                                            </div>
+                                            <span style="color: red" class="failure"
+                                                ng-show="frmacc.password.$error.pattern">
+                                                Must have at least 6 characters and should contain one number
+                                                ,one character and one special character</span>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 col-form-label"
+                                                for="basic-icon-default-email">Email</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                                    <input ng-model="form.email" name="txtEmail"
+                                                        placeholder="Please enter email..."
+                                                        ng-pattern='/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
+                                                        type="email" id="basic-icon-default-email" class="form-control"
+                                                        aria-label="john.doe"
+                                                        aria-describedby="basic-icon-default-email2" required />
+                                                    <span id="basic-icon-default-email2"
+                                                        class="input-group-text">@gmail.com</span>
+                                                </div>
+                                            </div>
+                                            <span style="color:Red"
+                                                ng-show="frmacc.txtEmail.$dirty&&frmacc.txtEmail.$error.pattern">
+                                                Your email is not in the correct format!</span>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label class="col-sm-2 col-form-label"
+                                                for="basic-icon-default-fullname">Address</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                        <i class='bx bx-building-house'></i></span>
+                                                    <input class="form-control" ng-model="form.address" name="address"
+                                                        type="text" id="basic-icon-default-fullname"
+                                                        placeholder="Enter your address..." aria-label="John Doe"
+                                                        aria-describedby="basic-icon-default-fullname2" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label>Gender</label>
+                                            <div class="check-element1">
+                                                <div class="form-control  ml-1">
+
+                                                    <input ng-model="form.gender" class="form-check-input1" name="Male"
+                                                        ng-value="true" type="radio" id="inlineFormCheckgGender1">
+                                                    <label class="form-check-label" for="inlineFormCheckgGender1">
+                                                        <i class='bx bx-male-sign'></i>
+                                                        Male
+                                                    </label>
+
+
+                                                    <input ng-model="form.gender" class="form-check-input2 ms-2"
+                                                        name="Female" ng-value="false" type="radio"
+                                                        id="inlineFormCheckgGender2">
+                                                    <label class="form-check-label" for="inlineFormCheckgGender2">
+                                                        <i class='bx bx-female-sign'></i>
+                                                        Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6 roleck">
+                                            <label>Role</label>
+                                            <div class="check-element2">
+                                                <div class="form-control ml-1">
+                                                    <label style="padding-right: 23px;" ng-repeat="i in roles"
+                                                        ng-model="role">
+                                                        <input type="checkbox" name="selectedRoles[]" value="{{i}}"
+                                                            ng-checked="role.indexOf(i) > -1"
+                                                            ng-click="toggleSelection(i)" id="{{i}}"> {{i}}
+                                                    </label>
+                                                    <small id="role"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6 activeck">
+                                            <label>Active</label>
+                                            <div class="form-check form-switch">
+                                                <input ng-model="form.active" class="form-check-input" type="checkbox"
+                                                    id="flexSwitchCheckDefault">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-2">
+                                        <button ng-click="createAccount()" class="btn btn-outline-primary me-2"><i
+                                                class='bx bxs-add-to-queue'></i>Create</button>
+                                        <button ng-click="updateAccount()" class="btn btn-outline-warning me-2"><i
+                                                class='bx bx-save'></i>Update</button>
+                                        <button ng-click="reset()" class="btn btn-outline-secondary"><i
+                                                class='bx bx-refresh'></i>Reset</button>
+                                        <button  ng-if="form.active" onclick="document.getElementById('id02').style.display='block'"  class="btn btn-outline-danger me-2">
+                                            <i class='bx bx-block'></i>
+                                            Block</button>
+                                    </div>
+                                </form>
+                                <div id="id02" class="modal">
+                                    <div class="modal-content2">
+                                        <div class="modal-header1">
+                                            <h5 class="modal-title1" id="exampleModalLabel2">Please write the reason for banned accounts:</h5>
+                                        </div>
+                                        <div class="modal-body1">
+                                            <div class="col-sm-10">
+                                                <div class="input-group input-group-merge">
+                                                    <span id="basic-icon-default-description" class="input-group-text">
+                                                        <i class='bx bxs-edit-alt'></i></span>
+                                                    <input class="form-control" ng-model="description" name="description"
+                                                           type="text" id="basic-icon-default-description"
+                                                           placeholder="Enter your reason..." aria-label="John Doe"
+                                                           aria-describedby="basic-icon-default-description" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer1">
+                                            <button onclick="document.getElementById('id02').style.display='none'" type="button" class="btn btn-outline-secondary">
+                                                Close
+                                            </button>
+                                            <button ng-click="deleteAccount(form.username)" onclick="document.getElementById('id02').style.display='none'" type="button"
+                                                    class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /Account -->
+                        </div>
+                        <div class="nav-align-top mb-4">
+                            <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                                <li class="nav-item">
+                                    <button
+                                            type="button"
+                                            class="nav-link active"
+                                            role="tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#navs-pills-justified-home"
+                                            aria-controls="navs-pills-justified-home"
+                                            aria-selected="true"
+                                    >
+                                        <i class='bx bx-history'></i> History Order
+                                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{orderList.length}}</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button
+                                            type="button"
+                                            class="nav-link"
+                                            role="tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#navs-pills-justified-profile"
+                                            aria-controls="navs-pills-justified-profile"
+                                            aria-selected="false"
+                                    >
+                                        <i class='bx bx-wallet' ></i> History Payment
+                                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">{{payment.length}}</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
+                                    <div class="card">
+                                        <div style="margin-top: 16px;margin-left: 16px;margin-bottom: 10px;"
+                                             class="navbar-nav align-items-left">
+                                            <div class="nav-item d-flex align-items-left align-items-center">
+                                                <i class="bx bx-search fs-4 lh-0"></i>
+                                                <input type="text" ng-model="searchtxt" class="form-control border-0 shadow-none"
+                                                       placeholder="Search..." aria-label="Search..." />
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table table-striped">
+                                                <h3 class="text-center mt-2">History Order</h3>
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">Rose Ref</th>
+                                                    <th class="text-center">Payment Method</th>
+                                                    <th class="text-center">Payment Status</th>
+                                                    <th class="text-center">Order Type</th>
+                                                    <th class="text-center">Amount</th>
+                                                    <th class="text-center">paymentDate</th>
+                                                </tr>
+
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                        <tr ng-repeat="historyorder in pagerHistoryOrder.orderList | filter: searchtxt">
+                                                            <td class="text-center">{{historyorder.roseRef}}</td>
+                                                            <td class="text-center">
+                                                                <div style="font-weight: bold;">
+                                                                    <span class="badge me-1 {{historyorder.paymentMethod}}">{{historyorder.paymentMethod}}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div style="font-weight: bold;">
+                                                                    <span class="badge me-1 {{historyorder.paymentStatus}}">{{historyorder.paymentStatus}}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div style="font-weight: bold;">
+                                                                    <span class="badge me-1 {{historyorder.orderType}}">{{historyorder.orderType}}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">${{historyorder.amount}}</td>
+                                                            <td class="text-center paymentDate">{{historyorder.paymentDate}}</td>
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-model="message" class="text-center">{{message}}</div>
+                                    <div class="demo-inline-spacing">
+                                        <div aria-label="Page navigation">
+                                            <ul class="pagination paginationCustom">
+                                                <li class="page-item first" ng-click="pagerHistoryOrder.first()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                                </li>
+                                                <li class="page-item prev" ng-click="pagerHistoryOrder.previous()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link">{{pagerHistoryOrder.page + 1}} of {{pagerHistoryOrder.count}}</a>
+                                                </li>
+                                                <li class="page-item next" ng-click="pagerHistoryOrder.next()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                                </li>
+                                                <li class="page-item last" ng-click="pagerHistoryOrder.last()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                                    <div class="card">
+                                        <div style="margin-top: 16px;margin-left: 16px;margin-bottom: 10px;"
+                                             class="navbar-nav align-items-left">
+                                            <div class="nav-item d-flex align-items-left align-items-center">
+                                                <i class="bx bx-search fs-4 lh-0"></i>
+                                                <input type="text" ng-model="searchtxt" class="form-control border-0 shadow-none"
+                                                       placeholder="Search..." aria-label="Search..." />
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table table-striped">
+                                                <h3 class="text-center mt-2">History payment</h3>
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">Rose Ref</th>
+                                                    <th class="text-center">Payment Method</th>
+                                                    <th class="text-center">Payment Status</th>
+                                                    <th class="text-center">Order Type</th>
+                                                    <th class="text-center">Amount</th>
+                                                    <th class="text-center">paymentDate</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                <tr ng-repeat="payment in pagerHistoryPayment.payment | filter: searchtxt">
+                                                    <td class="text-center">{{payment.roseRef}}</td>
+                                                    <td class="text-center">
+                                                        <div style="font-weight: bold;">
+                                                            <span class="badge me-1 {{payment.paymentMethod}}">{{payment.paymentMethod}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div style="font-weight: bold;">
+                                                            <span class="badge me-1 {{payment.paymentStatus}}">{{payment.paymentStatus}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div style="font-weight: bold;">
+                                                            <span class="badge me-1 {{payment.orderType}}">{{payment.orderType}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">${{payment.amount}}</td>
+                                                    <td class="text-center paymentDate">{{payment.createDate | date:'M/d/yyyy HH:mm:ss'}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-model="message" class="text-center">{{message}}</div>
+                                    <div class="demo-inline-spacing">
+                                        <div aria-label="Page navigation">
+                                            <ul class="pagination paginationCustom">
+                                                <li class="page-item first" ng-click="pagerHistoryPayment.first()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                                </li>
+                                                <li class="page-item prev" ng-click="pagerHistoryPayment.previous()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link">{{pagerHistoryPayment.page + 1}} of {{pagerHistoryPayment.count}}</a>
+                                                </li>
+                                                <li class="page-item next" ng-click="pagerHistoryPayment.next()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                                </li>
+                                                <li class="page-item last" ng-click="pagerHistoryPayment.last()">
+                                                    <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div id="menu1" class="container tab-pane fade menuListAccount"><br>
+                        <div class="card">
+                            <div style="margin-top: 16px;margin-left: 16px" class="navbar-nav align-items-left">
+                                <div class="nav-item d-flex align-items-left">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input ng-model="searchtxt" type="text" class="form-control border-0 shadow-none"
+                                        placeholder="Search..." aria-label="Search..." />
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" ng-click='sortColumn("username")'
+                                                ng-class='sortClass("username")'>Username</th>
+                                            <th class="text-center" ng-click='sortColumn("fullName")'
+                                                ng-class='sortClass("fullName")'>Full name</th>
+                                            <th class="text-center">Phone</th>
+                                            <th class="text-center">Balance</th>
+                                            <th class="text-center">Role</th>
+                                            <th class="text-center">Active</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        <tr id="role-color"
+                                            ng-repeat="account in pager.accounts | filter: searchtxt |orderBy:column:reverse">
+                                            <td class="text-center">{{account.username}}</td>
+                                            <td class="text-center">{{account.fullName}}</td>
+                                            <td class="text-center">{{account.phone}}</td>
+                                            <td class="text-center">{{account.balance}}</td>
+                                            <td class="text-center" ng-repeat="role in account.roles">
+                                                <span class="badge me-1 {{role.name}}"
+                                                    value="{{role.name}}">{{role.name}}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-switch">
+                                                    <input ng-model="account.active" class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckDefault">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                        <a class="dropdown-item" ng-click="editAccount(account,$index)"><i
+                                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="demo-inline-spacing">
+                            <!-- Basic Pagination -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item first" ng-click="pager.first()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                                    </li>
+                                    <li class="page-item prev" ng-click="pager.previous()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link">{{pager.page+1}} of {{pager.count}}</a>
+                                    </li>
+                                    <li class="page-item next" ng-click="pager.next()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                    </li>
+                                    <li class="page-item last" ng-click="pager.last()">
+                                        <a class="page-link"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!--/ Basic Pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{user/index.html :: dynamic(~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSE</title>
+</head>
+
+<body>
+    <!-- breadcrumb -->
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+                Home
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+
+            <span class="stext-109 cl4">
+                Shoping Cart
+            </span>
+        </div>
+    </div>
+
+
+    <!-- Shoping Cart -->
+    <form class="bg0 p-t-75 p-b-85">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
+                    <div class="m-l-25 m-r--38 m-lr-0-xl">
+                        <div class="wrap-table-shopping-cart">
+                            <table class="table-shopping-cart">
+                                <tr class="table_head">
+                                    <th></th>
+                                    <th colspan="2" class="t-a-c m-l-20">Product</th>
+                                    <th class="t-a-c">Size</th>
+                                    <th class="t-a-c">Color</th>
+                                    <th class="t-a-c">Price</th>
+                                    <th class="t-a-c">Quantity</th>
+                                    <th class="t-a-c p-r-20">Total</th>
+                                </tr>
+
+                                <tr ng-repeat="i in cartItems" class="table_row">
+                                    <td class="p-l-50"><input id="check{{i.sku}}" type="checkbox"
+                                            ng-click="checkToCart(i.sku)">
+                                    </td>
+                                    <td class="t-a-c">
+                                        <div class="how-itemcart1 m-l-20" ng-click="cart.remove(i.productCode)">
+                                            <img src="{{i.imageUrl}}" alt="IMG">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="clblack" href="/product-detail/{{i.productCode}}">
+                                            {{i.productName}}
+                                        </a>
+                                    </td>
+                                    <td class="t-a-c">{{i.sizeValue}}</td>
+                                    <td class="t-a-c">{{i.color}}</td>
+                                    <td class="t-a-c">
+                                        <del ng-if="i.discount || i.discountPercent > 0" class="t-a-c">
+                                            ${{i.commonPrice}}
+                                        </del>
+                                        <span class="t-a-c cl2">
+                                            {{i.commonPrice
+                                            * (100 - i.discountPercent)
+                                            / 100
+                                            | currency : "$"}}
+                                        </span>
+                                    </td>
+                                    <td class="t-a-c">
+                                        <div class="wrap-num-product flex-w m-l-auto m-r-auto">
+                                            <button ng-click="cart.quantityMinus(i.sku)"
+                                                class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m m-0">
+                                                <i class="fs-16 zmdi zmdi-minus"></i>
+                                            </button>
+
+                                            <input id="{{i.sku}}" ng-model="i.quantity"
+                                                class="mtext-104 cl3 txt-center num-product" type="number"
+                                                name="num-product" ng-value="{{i.quantity}}">
+
+                                            <button ng-click="cart.quantityPlus(i.sku)"
+                                                class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m m-0">
+                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="t-a-c p-r-20">
+                                        ${{i.commonPrice
+                                        * (100 - i.discountPercent)
+                                        / 100
+                                        * i.quantity}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="flex-w bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm flex-r">
+                            <div ng-click="cart.clear()"
+                                class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10 m-r-10">
+                                Clear Cart
+                            </div>
+                            <div ng-click="processToPayment()"
+                                class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                Process to payment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

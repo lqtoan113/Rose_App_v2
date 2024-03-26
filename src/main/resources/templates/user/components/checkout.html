@@ -1,0 +1,63 @@
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title f-s-25 f-w-b" id="exampleModalLabel3">Order detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col mb-0">
+                        <label for="name" class="form-label">Full name</label>
+                        <input type="text" id="name" class="form-control" value="{{profile.username}}" />
+                    </div>
+                    <div class="col mb-0">
+                        <label for="phone" class="form-label">Phone number</label>
+                        <input type="text" id="phone" class="form-control" value="{{profile.phone}}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="deliveryAddress" class="form-label">Address</label>
+                        <input type="text" id="deliveryAddress" class="form-control" value="{{deliveryAddress}}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive text-nowrap table-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="i in cartItems" class="table-border-bottom-0">
+                                <tr>
+                                    <td class="t-a-c">
+                                        <div class="how-itemcart1 m-l-20" ng-click="cart.remove(i.productCode)">
+                                            <img src="{{i.imageUrl}}" alt="IMG">
+                                        </div>
+                                    </td>
+                                    <td>{{i.productName}}</td>
+                                    <td class="t-a-c">{{i.size}}</td>
+                                    <td class="t-a-c">${{i.commonPrice}}</td>
+                                    <td class="t-a-c p-r-20">${{i.commonPrice*i.quantity}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 cancel-order">
+                        <button ng-click="purchase()" type="button" class="btn btn-danger w-fc">
+                            Payment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

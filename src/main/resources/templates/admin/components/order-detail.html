@@ -1,0 +1,230 @@
+<div class="modal fade modal-cancel" id="largeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title f-s-25 f-w-b title-details" id="exampleModalLabel3">Order Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col mb-0">
+                        <ul>
+                            <li>
+                                <label for="nameLarge" class="detail-lable">Order ID:
+                                    <span class="style-data-order-details">{{orderDetail.id}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Status:
+                                    <span class="badge me-1 {{orderDetail.status}}">{{orderDetail.status}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Payment Method:
+                                    <span class="badge me-1 {{orderDetailPayment.paymentMethod}}">{{orderDetailPayment.paymentMethod}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Payment Status:
+                                    <span class="badge me-1 {{orderDetailPayment.paymentStatus}}">{{orderDetailPayment.paymentStatus}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Phone Number:
+                                    <span class="style-data-order-details">{{orderDetail.phone}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Address:</label>
+                                <span class="style-data-order-details tex-area">{{orderDetail.address}}</span>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Description:</label>
+                            </li>
+                            <textarea class="style-data-order-details tex-area" rows="3" disabled>{{orderDetail.description}}</textarea>
+
+                        </ul>
+                    </div>
+                    <div class="col mb-0">
+                        <ul>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Rose Ref:
+                                    <span class="style-data-order-details">{{orderDetailPayment.roseRef}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Order Type:
+                                    <span class="badge me-1 {{orderDetailPayment.orderType}}">{{orderDetailPayment.orderType}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Amount:
+                                    <span class="total">{{orderDetailPayment.amount}}$</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Bank Code:
+                                    <span class="badge me-1 {{orderDetailPayment.vnp_BankCode}}">{{orderDetailPayment.vnp_BankCode}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Bank Transaction Number:
+                                    <span class="style-data-order-details">{{orderDetailPayment.vnp_BankTranNo}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Card Type:
+                                    <span class="badge me-1 {{orderDetailPayment.vnp_CardType}}">{{orderDetailPayment.vnp_CardType}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">VN Pay Transaction Number:
+                                    <span class="style-data-order-details">{{orderDetailPayment.vnp_TransactionNo}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Create Date:
+                                    <span class="style-data-order-details">{{orderDetail.createDate | date:'M/d/yyyy HH:mm:ss'}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Expire Date:
+                                    <span class="style-data-order-details">{{orderDetailPayment.vnp_ExpireDate | date:'M/d/yyyy HH:mm:ss'}}</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Pay Date:
+                                    <span class="style-data-order-details">{{orderDetailPayment.payDate | date:'M/d/yyyy HH:mm:ss'}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Discount Money:
+                                    <span class="style-data-order-details">{{orderDetailList[0].discountPercent}}</span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label for="dobLarge" class="detail-lable">Final Money:
+                                    <span class="style-data-order-details">{{orderDetailList[0].finalPrice}}</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive text-nowrap table-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="odl in orderDetailList" class="table-border-bottom-0">
+                                <tr>
+                                    <td><img width="50px" src="{{odl.product.image.imageUrl}}" alt=""></td>
+                                    <td>{{odl.size.sizeValue}}</td>
+                                    <td>{{odl.product.color.colorName}}</td>
+                                    <td class="text-center">{{odl.quantity}}</td>
+                                    <td>{{odl.totalPrice}}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col mb-0">
+                        <div style="width: 159px;" ng-if="orderDetailCancelButton" class="row">
+                            <div style="width: 159px;" class="col-6 cancel-order">
+                                <button onclick="document.getElementById('id02').style.display='block'" type="button" class="btn btn-danger w-fc">
+                                    Cancel
+                                </button>
+                                <div id="id02" class="modal">
+                                    <div class="modal-content1">
+                                        <div class="modal-header1">
+                                            <h5 class="modal-title1" id="exampleModalLabel2">Please write the reason for canceling this order:</h5>
+                                        </div>
+                                        <div class="modal-body1">
+                                            <span class="custom-tuw">Please tell us why (⋟﹏⋞)</span>
+                                            <div class="form-check mt-3">
+                                                <input name="reason" class="form-check-input" type="radio" value="r1v" id="r1" checked />
+                                                <label id="r1v" class="form-check-label" for="r1">
+                                                    The seller does not deliver the goods to the carrier
+                                                </label>
+                                            </div>
+                                            <div class="form-check mt-3">
+                                                <input name="reason" class="form-check-input" type="radio" value="r2v" id="r2" />
+                                                <label id="r2v" class="form-check-label" for="r2">
+                                                    Buyer has not completed payment for orders
+                                                </label>
+                                            </div>
+                                            <div class="form-check mt-3">
+                                                <input name="reason" class="form-check-input" type="radio" value="r3v" id="r3" />
+                                                <label id="r3v" class="form-check-label" for="r3">
+                                                    Order canceled due to overdue confirmation
+                                                </label>
+                                            </div>
+                                            <div class="form-check mt-3">
+                                                <input name="reason" class="form-check-input" type="radio" value="r4v" id="r4" />
+                                                <label id="r4v" class="form-check-label" for="r4">
+                                                    Canceled orders due to merging or splitting orders
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer1">
+                                            <button onclick="document.getElementById('id02').style.display='none'" type="button" class="btn btn-outline-secondary">
+                                                Close
+                                            </button>
+                                            <button ng-click="cancelOrder(orderDetail.id)" onclick="document.getElementById('id02').style.display='none'" type="button"
+                                                    class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-0  btn-accecpt">
+                        <div ng-if="orderDetailReceivedButton" class="row">
+                            <div class="col-6 cancel-order">
+                                <button ng-click="updateOrder(orderDetail)" type="button" class="btn btn-success w-fc">
+                                    Accept
+                                </button>
+                            </div>
+                        </div>
+
+                        <div ng-if="orderDetailShippingdButton" class="row">
+                            <div class="col-6 cancel-order">
+                                <button ng-click="updateOrder(orderDetail)" type="button" class="btn btn-success w-fc">
+                                    Shipping
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+    var modal1 = document.getElementById('id02');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>

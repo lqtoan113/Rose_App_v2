@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="dynamic(view)">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ROSE</title>
+
+    <!-- Icon -->
+    <link rel="icon" type="image/png" th:href="@{|/user/assets/images/logo-removebg.png|}" />
+
+    <!-- Font  -->
+    <link rel="stylesheet" th:href="@{|/user/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/fonts/iconic/css/material-design-iconic-font.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/fonts/linearicons-v1.0.0/icon-font.min.css|}">
+
+    <!-- Other library -->
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/bootstrap/css/bootstrap.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/animate/animate.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/css-hamburgers/hamburgers.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/animsition/css/animsition.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/select2/select2.min.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/daterangepicker/daterangepicker.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/slick/slick.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/MagnificPopup/magnific-popup.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/vendor/perfect-scrollbar/perfect-scrollbar.css|}">
+
+    <!-- Custom css -->
+    <link rel="stylesheet" th:href="@{|/user/assets/css/util.css|}">
+    <link rel="stylesheet" th:href="@{|/user/assets/css/main.css|}">
+
+    <!-- Toast css -->
+    <link rel="stylesheet" th:href="@{|/admin/assets/fonts/boxicons.css|}">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/core.css|}">
+    <link rel="stylesheet" th:href="@{|/admin/assets/css/theme-default.css|}">
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <base href="/" />
+</head>
+
+<body class="animsition" ng-app="shop" ng-controller="shop">
+    <!-- Header -->
+    <div th:replace="~{/user/components/header.html}"></div>
+
+    <!-- Cart -->
+    <div th:replace="~{/user/components/cart.html}"></div>
+
+    <!-- Order detail-->
+    <div th:replace="~{/user/components/order-detail.html}"></div>
+
+    <!-- Checkout -->
+    <div th:replace="~{/user/components/checkout.html}"></div>
+
+    <!-- Slide bar -->
+    <div th:replace="~{/user/components/slidebar.html}"></div>
+
+    <!-- Content -->
+    <div th:replace="${view}"></div>
+
+    <!-- Footer -->
+    <div th:replace="~{/user/components/footer.html}"></div>
+
+    <!-- Script -->
+    <script th:src="@{user/assets/js/autocomplete.js}"></script>
+    <script th:src="@{user/assets/vendor/jquery/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{user/assets/vendor/animsition/js/animsition.min.js}"></script>
+    <script th:src="@{user/assets/vendor/bootstrap/js/popper.js}"></script>
+    <script th:src="@{user/assets/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{user/assets/vendor/select2/select2.min.js}"></script>
+
+    <!-- Province script -->
+    <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+    <script th:src="@{user/assets/js/districts.js}"></script>
+
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+
+    <script th:src="@{user/assets/vendor/daterangepicker/moment.min.js}"></script>
+    <script th:src="@{user/assets/vendor/daterangepicker/daterangepicker.js}"></script>
+    <script th:src="@{user/assets/vendor/slick/slick.min.js}"></script>
+    <script th:src="@{user/assets/vendor/parallax100/parallax100.js}"></script>
+
+    <script>
+        $('.parallax100').parallax100();
+    </script>
+
+    <script th:src="@{user/assets/vendor/MagnificPopup/jquery.magnific-popup.min.js}"></script>
+
+    <script>
+        $('.gallery-lb').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+
+    <script th:src="@{user/assets/vendor/isotope/isotope.pkgd.min.js}"></script>
+    <script th:src="@{user/assets/vendor/sweetalert/sweetalert.min.js}"></script>
+    <script th:src="@{user/assets/js/shop-handle.js}"></script>
+
+    <script>
+        $('.js-addwish-b2').on('click', function (e) {
+            e.preventDefault();
+        });
+
+        $('.js-addcart-detail').each(function () {
+            var nameProduct = "Item";
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to cart !", "success");
+            });
+        });
+    </script>
+
+    <script th:src="@{user/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+
+    <script th:src="@{user/assets/js/main.js}" defer></script>
+    <script th:src="@{admin/assets/js/bootstrap.js}"></script>
+    <script th:src="@{user/assets/js/validate-handle.js}"></script>
+    <script th:src="@{user/assets/js/login-handle.js}"></script>
+    <script th:src="@{user/assets/js/slick-custom.js}" defer></script>
+</body>
+
+</html>

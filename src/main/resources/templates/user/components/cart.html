@@ -1,0 +1,160 @@
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                <i class="zmdi zmdi-shopping-cart"></i>
+                Your Cart
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        <div class="header-cart-content flex-w js-pscroll">
+            <div ng-if=!haveItem>You don't have any product in cart</div>
+            <ul class="header-cart-wrapitem w-full">
+                <li ng-repeat="i in cartItems" class="header-cart-item flex-w flex-t m-b-12">
+                    <div class="header-cart-item-img" ng-click="cart.remove(i.productCode)">
+                        <img src="{{i.imageUrl}}" alt="IMG">
+                    </div>
+
+                    <div class="header-cart-item-txt p-t-8">
+                        <a href="/product-detail/{{i.productCode}}"
+                            class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                            {{i.productName}}
+                        </a>
+
+                        <span class="d-f header-cart-item-info">
+                            {{i.quantity}} x
+                            <span class="d-f flex-m">
+                                <del class="m-r-5 m-l-5"
+                                    ng-if="i.discount || i.discountPercent > 0">${{i.commonPrice}}</del>
+                                <span class="cl2">
+                                    {{i.commonPrice
+                                    * (100 - i.discountPercent)
+                                    / 100
+                                    | currency : "$"}}
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="w-full">
+                <div ng-if=haveItem class="header-cart-buttons flex-w w-full">
+                    <a href="/cart/view"
+                        class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        Check Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrap-header-notification js-panel-notification">
+    <div class="s-full js-hide-notification"></div>
+
+    <div class="header-cart flex-col-l p-r-10">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8 p-l-65">
+            <span class="mtext-103 cl2">
+                <i class="zmdi zmdi-money-box m-r-10"></i>
+                Rose Wallet
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-notification">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+
+        <div ng-if="profile" class="header-cart-content1 w-full flex-w">
+            <ul class="header-cart-wrapitem w-full">
+                <li class="header-cart-item flex-w flex-t m-b-12 p-l-65">
+                    <div class="t-a-c m-l-35">
+                        <div class="wallet-title">Total balance</div>
+                        <div class="wallet-balance">${{profile.balance}}</div>
+                        <a href="/recharge">
+                            <button type="button" class="btn rounded-pill btn-outline-dark">
+                                Recharge
+                            </button>
+                        </a>
+                    </div>
+                </li>
+                <li class="header-cart-item flex-w flex-t m-b-12 p-l-15">
+                    <div class="card">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Trading ID</th>
+                                        <th>Payment day</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-if="!historyPayment">
+                                    <tr>
+                                        <td colspan="3">
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-if="historyPayment" ng-repeat="hp in historyPayment"
+                                    class="table-border-bottom-0">
+                                    <tr>
+                                        <td>{{hp.roseRef}}</td>
+                                        <td>{{hp.paymentDate}}</td>
+                                        <td>
+                                            <a style="cursor: pointer;" onclick="showHistoryOrderDetail(this)"
+                                                id="#c{{hp.roseRef}}tr">
+                                                <i class="zmdi zmdi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr id="c{{hp.roseRef}}tr" class="d-n">
+                                        <td colspan="3">
+                                            <div class="wrap-hod">
+                                                <div class="d-f flex-sb">
+                                                    <div>Payment status:</div>
+                                                    <div class="badge me-1 {{hp.paymentStatus}} m-b-5">
+                                                        {{hp.paymentStatus}}
+                                                    </div>
+                                                </div>
+                                                <div class="d-f flex-sb">
+                                                    <div>Payment method:</div>
+                                                    <div class="badge me-1 {{hp.paymentMethod}}">
+                                                        {{hp.paymentMethod}}
+                                                    </div>
+                                                </div>
+                                                <div class="d-f flex-sb">
+                                                    <div>Order type:</div>
+                                                    <div>{{hp.orderType}}</div>
+                                                </div>
+                                                <div class="d-f flex-sb">
+                                                    <div>Amount:</div>
+                                                    <div class="hpAmount">${{hp.amount}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div ng-if="!profile" class="header-cart-content flex-w p-l-65 js-pscroll">
+            <ul class="header-cart-wrapitem w-full">
+                <li class="header-cart-item flex-w flex-t m-b-12">
+                    <div>
+                        Please login to see your wallet
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

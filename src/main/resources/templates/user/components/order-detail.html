@@ -1,0 +1,179 @@
+<div class="modal fade" id="largeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title f-s-25 f-w-b" id="exampleModalLabel3">Order detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-2">
+                    <div class="col mb-0">
+                        <label for="nameLarge" class="form-label">Order id</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-card"></i>
+                            </span>
+                            <input type="text" id="nameLarge" class="form-control" value="{{orderDetail.id}}"
+                                disabled />
+                        </div>
+                    </div>
+                    <div class="col mb-0">
+                        <label for="dobLarge" class="form-label">Status</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-puzzle-piece"></i>
+                            </span>
+                            <input type="text" id="dobLarge" class="form-control" value="{{orderDetail.status}}"
+                                disabled />
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="orderDetailPayment.paymentStatus === 'SUCCESS'" class="row g-2">
+                    <div class="col mb-0">
+                        <label for="bankName" class="form-label">Bank name</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-balance"></i>
+                            </span>
+                            <input type="text" id="bankName" class="form-control"
+                                value="{{orderDetailPayment.vnp_BankCode}}" disabled />
+                        </div>
+                    </div>
+                    <div class="col mb-0">
+                        <label for="paymentDate" class="form-label">Payment date</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-calendar-note"></i>
+                            </span>
+                            <input type="text" id="paymentDate" class="form-control"
+                                value="{{orderDetailPayment.payDate | date:'dd/MM/yyyy'}}" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="emailLarge" class="form-label">Address</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text ">
+                                <i class="zmdi zmdi-pin"></i>
+                            </span>
+                            <input type="text" id="emailLarge" class="form-control" value="{{orderDetail.address}}"
+                                disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive text-nowrap table-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="odl in orderDetailList" class="table-border-bottom-0">
+                                <tr>
+                                    <td><img width="50px" src="{{odl.product.image.imageUrl}}" alt=""></td>
+                                    <td>{{odl.size.sizeValue}}</td>
+                                    <td>{{odl.product.color.colorName}}</td>
+                                    <td>{{odl.quantity}}</td>
+                                    <td>
+                                        <del ng-if="odl.totalPrice > odl.finalPrice">${{odl.totalPrice}}</del>
+                                        <span>${{odl.finalPrice}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div ng-if="orderDetail.status === 'PENDING_ACCEPT' || orderDetail.status === 'ACCEPTED'" class="row">
+                    <div class="col-12 cancel-order">
+                        <button data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"
+                            type="button" class="btn btn-danger w-fc">
+                            Cancel order
+                        </button>
+                        <button ng-if="paymentAgainBtn" ng-click="payAgain(orderDetailPayment.vnp_PayUrl)" type="button"
+                            class="btn btn-danger w-fc m-l-15">
+                            Pay again
+                        </button>
+                    </div>
+                </div>
+                <div ng-if="orderDetail.status === 'SHIPPING'" class="row">
+                    <div class="col-12 cancel-order">
+                        <button ng-click="receivedOrder(orderDetail.id)" type="button" class="btn btn-danger w-fc">
+                            Confirm received
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalToggle2" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title modal-title-custom" id="modalToggleLabel2">Cancel order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span class="custom-tuw">Please tell us why (⋟﹏⋞)</span>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r1v" id="r1" checked />
+                    <label id="r1v" class="form-check-label" for="r1">
+                        I want to update my address/phone number
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r2v" id="r2" />
+                    <label id="r2v" class="form-check-label" for="r2">
+                        I want to add/change Voucher
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r3v" id="r3" />
+                    <label id="r3v" class="form-check-label" for="r3">
+                        I want to change product (size, color, quantity,...)
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r4v" id="r4" />
+                    <label id="r4v" class="form-check-label" for="r4">
+                        I want to change payment method
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r5v" id="r5" />
+                    <label id="r5v" class="form-check-label" for="r5">
+                        I found another better place to buy (cheaper, more reputable, faster delivery,...)
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r6v" id="r6" />
+                    <label id="r6v" class="form-check-label" for="r6">
+                        I don't need to buy anymore
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input name="reason" class="form-check-input" type="radio" value="r7v" id="r7" />
+                    <label id="r7v" class="form-check-label" for="r7">
+                        I couldn't find a suitable cancellation reason
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer d-f">
+                <button class="btn btn-secondary m-r-20" data-bs-target="#largeModal" data-bs-toggle="modal"
+                    data-bs-dismiss="modal">
+                    Back
+                </button>
+                <button ng-if="orderDetail.status === 'PENDING_ACCEPT' || orderDetail.status === 'ACCEPTED'"
+                    ng-click="cancelOrder(orderDetail.id)" class="btn btn-danger">
+                    Confirm Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
